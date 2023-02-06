@@ -1,0 +1,7 @@
+Transfer of G-Code to another coordinate system with an offset in X, Y, Z
+
+Example:
+	input  'G0 X0. Y0. Z10.'
+	result 'G0 X1000. Y500. Z10.'
+
+PS. Not working with I, J, K, R only with X, Y, Z
