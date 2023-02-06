@@ -5,7 +5,7 @@
 #include <vector>
 
 void showExample() {
-    printf("\
+	printf("\
 \n \
   Example:\n \
 \n \
@@ -18,7 +18,7 @@ void showExample() {
 }
 
 void showUsage() {
-    printf("\
+	printf("\
 \n \
   Usage:\n \
 \n \
@@ -30,64 +30,64 @@ void showUsage() {
 }
 
 int main(int argc, char *args[]) {
-    FILE *fi, *fo;
+	FILE *fi, *fo;
 
-    char fileName[1024]={0};
-    char buf[1024];
-    char *pch;
+	char fileName[1024]={0};
+	char buf[1024];
+	char *pch;
 
-    switch (argc - 1) {
-    case 5:
-        fi = fopen(args[4], "r");
-        pch = args[5];
-        break;
-    case 4:
-        strcpy(fileName, args[4]);
-        pch = strrchr(fileName, '.');
-        if (NULL != pch)
-            *pch = 0;
-        pch = fileName;
-        strcat(pch, "_out.cnc");
-        fi = fopen(args[4], "r");
-        pch = fileName;
-        break;
-    default:
-        showUsage();
-        return 0;
-    }
+	switch (argc - 1) {
+	  case 5:
+		fi = fopen(args[4], "r");
+		pch = args[5];
+		break;
+	  case 4:
+		strcpy(fileName, args[4]);
+		pch = strrchr(fileName, '.');
+		if (NULL != pch)
+			*pch = 0;
+		pch = fileName;
+		strcat(pch, "_out.cnc");
+		fi = fopen(args[4], "r");
+		pch = fileName;
+		break;
+	  default:
+		showUsage();
+		return 0;
+	}
 
-    if (NULL == fi) {
-        printf("Error opening input file '%s'!\nprogram end.\n", args[3]);
-        showExample();
-        return 1;
-    }
+	if (NULL == fi) {
+		printf("Error opening input file '%s'!\nprogram end.\n", args[3]);
+		showExample();
+		return 1;
+	}
 
-    int deltaX = atoi(args[1]);
-    int deltaY = atoi(args[2]);
-    int deltaZ = atoi(args[3]);
+	int deltaX = atoi(args[1]);
+	int deltaY = atoi(args[2]);
+	int deltaZ = atoi(args[3]);
 
-    fo = fopen(pch, "w");
+	fo = fopen(pch, "w");
 
-    if (NULL == fo) {
-        fclose(fi);
-        printf("Error opening output file '%s'!\nprogram end.\n", pch);
-        showExample();
-        return 1;
-    }
+	if (NULL == fo) {
+		fclose(fi);
+		printf("Error opening output file '%s'!\nprogram end.\n", pch);
+		showExample();
+		return 1;
+	}
 
-    printf("delta 'X': %d, delta 'Y': %d, delta 'Z': %d\n", deltaX, deltaY, deltaZ);
+	printf("delta 'X': %d, delta 'Y': %d, delta 'Z': %d\n", deltaX, deltaY, deltaZ);
 
-    float x = 0, y = 0, z = 0;
-    bool isX = false, isY = false, isZ = false;
-    int F=0, N, M;
-    bool isF = false, isM = false;
-    int line = 0, i;
+	float x = 0, y = 0, z = 0;
+	bool isX = false, isY = false, isZ = false;
+	int F=0, N, M;
+	bool isF = false, isM = false;
+	int line = 0, i;
 
-    std::vector<int> G;
-    int iG;
+	std::vector<int> G;
+	int iG;
 
-    int T = 1, S = 10000;
-    bool isT = false, isS = false;
+	int T = 1, S = 10000;
+	bool isT = false, isS = false;
 
 	do {
 		if (fgets(buf, sizeof(buf), fi) == NULL)
@@ -174,10 +174,10 @@ int main(int argc, char *args[]) {
 		} else if (isM)
 			fprintf(fo, "M%d\n", M);
 
-    } while(!feof(fi));
+	} while(!feof(fi));
 
-    fclose(fi);
-    fclose(fo);
+	fclose(fi);
+	fclose(fo);
 
-    return 0;
+	return 0;
 }
