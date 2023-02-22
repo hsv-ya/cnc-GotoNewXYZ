@@ -62,9 +62,26 @@ int main(int argc, char *args[]) {
 		return 1;
 	}
 
-	int deltaX = atoi(args[1]);
-	int deltaY = atoi(args[2]);
-	int deltaZ = atoi(args[3]);
+	double deltaX = 0;
+	int error = sscanf(args[1], "%lf", &deltaX);
+	if (error <= 0) {
+		printf("Error in first argument '%s'!\nprogram end.\n", args[1]);
+		return 2;
+	}
+
+	double deltaY = 0;
+	error = sscanf(args[2], "%lf", &deltaY);
+	if (error <= 0) {
+		printf("Error in second argument '%s'!\nprogram end.\n", args[2]);
+		return 3;
+	}
+
+	double deltaZ = 0;
+	error = sscanf(args[3], "%lf", &deltaZ);
+	if (error <= 0) {
+		printf("Error in third argument '%s'!\nprogram end.\n", args[3]);
+		return 4;
+	}
 
 	fo = fopen(pch, "w");
 
@@ -75,9 +92,9 @@ int main(int argc, char *args[]) {
 		return 1;
 	}
 
-	printf("delta 'X': %d, delta 'Y': %d, delta 'Z': %d\n", deltaX, deltaY, deltaZ);
+	printf("delta 'X': %.3f, delta 'Y': %.3f, delta 'Z': %.3f\n", deltaX, deltaY, deltaZ);
 
-	float x = 0, y = 0, z = 0;
+	double x = 0, y = 0, z = 0;
 	bool isX = false, isY = false, isZ = false;
 	int F=0, N, M;
 	bool isF = false, isM = false;
@@ -123,15 +140,15 @@ int main(int argc, char *args[]) {
 				sscanf(pch+i+1, "%d", &M);
 				isM = true;
 			}else if (buf[i] == 'X') {
-				sscanf(pch+i+1, "%f", &x);
+				sscanf(pch+i+1, "%lf", &x);
 				x += deltaX;
 				isX = true;
 			}else if (buf[i] == 'Y') {
-				sscanf(pch+i+1, "%f", &y);
+				sscanf(pch+i+1, "%lf", &y);
 				y += deltaY;
 				isY = true;
 			}else if (buf[i] == 'Z') {
-				sscanf(pch+i+1, "%f", &z);
+				sscanf(pch+i+1, "%lf", &z);
 				z += deltaZ;
 				isZ = true;
 			}else if (buf[i] == 'F') {
@@ -161,11 +178,11 @@ int main(int argc, char *args[]) {
 				exit(2);
 			}
 			if (isX)
-				fprintf(fo, " X%.3f", x);
+				fprintf(fo, " X%.3lf", x);
 			if (isY)
-				fprintf(fo, " Y%.3f", y);
+				fprintf(fo, " Y%.3lf", y);
 			if (isZ)
-				fprintf(fo, " Z%.3f", z);
+				fprintf(fo, " Z%.3lf", z);
 			if (isF)
 				fprintf(fo, " F%d", F);
 			fprintf(fo, "\n");
